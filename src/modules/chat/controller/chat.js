@@ -1,5 +1,5 @@
 import userModel from "../../../../DB/model/User.model.js";
-import chatModel from "../../../../DB/model/chat.model.js";
+import chatModel from "../../../../DB/model/Chat.model.js";
 import { asyncHandler } from "../../../utils/errorHandling.js";
 import { getIo } from "../../../utils/socket.js";
 import moment from 'moment';
