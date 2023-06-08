@@ -25,9 +25,23 @@ export const updateProfilePic = joi.object({
 }).required()
 
 
-export const updateCoverPics = joi.object({
-    files: joi
-            .array()
-            .items(generalFields.file),
+export const softDelete = joi.object({
     authorization: joi.string().required()
 }).required()
+
+
+export const deleteUser = joi.object({
+    authorization: joi.string().required()
+}).required()
+
+export const signout = joi.object({
+    authorization: joi.string().required()
+}).required()
+
+
+// export const updateCoverPics = joi.object({
+//     files: joi
+//             .array()
+//             .items(generalFields.file),
+//     authorization: joi.string().required()
+// }).required()

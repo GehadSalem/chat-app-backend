@@ -4,12 +4,13 @@ import { compare, hash } from "../../../utils/HashAndCompare.js";
 import cloudinary from '../../../utils/cloudinary.js'
 
 
-export const userList = asyncHandler(async(req, res, next) => {
+//without auth fro test
+export const users = asyncHandler(async(req, res, next) => {
     const users = await userModel.find()
     return res.status(200).json({message:"Done", users})
 })
 
-export const profile = asyncHandler(async (req, res, next) => {
+export const profileId = asyncHandler(async (req, res, next) => {
     const user = await userModel.find()
     return res.json({ message: "Done", user})
 })
@@ -19,6 +20,20 @@ export const friendProfile = asyncHandler(async (req, res, next) => {
     const user = await userModel.findById(id)
     return res.json({ message: "Done", user})
 })
+
+
+//with auth
+export const userList = asyncHandler(async(req, res, next) => {
+    const users = await userModel.find({_id: {$ne: req.user._id}})
+    return res.status(200).json({message:"Done", users})
+})
+
+export const profile = asyncHandler(async (req, res, next) => {
+    const user = await userModel.findById(req.user._id)
+    return res.json({ message: "Done", user})
+})
+
+
 
 //updat user
 export const updateUser =  asyncHandler(async (req, res, next) => {
