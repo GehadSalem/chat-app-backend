@@ -9,7 +9,7 @@ const router = Router();
 router.get("/",auth(Object.values(roles)) ,userController.userList)
 
 
-router.get("/:id" , auth(Object.values(roles)), userController.profile)
+router.get("/:id" , userController.profile)
 
 router.get("/friendProfile/:id", userController.friendProfile)
 
