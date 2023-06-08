@@ -5,12 +5,12 @@ import cloudinary from '../../../utils/cloudinary.js'
 
 
 export const userList = asyncHandler(async(req, res, next) => {
-    const users = await userModel.find({_id: {$ne: req.user._id}})
+    const users = await userModel.find()
     return res.status(200).json({message:"Done", users})
 })
 
 export const profile = asyncHandler(async (req, res, next) => {
-    const user = await userModel.findById(req.user._id)
+    const user = await userModel.find()
     return res.json({ message: "Done", user})
 })
 
