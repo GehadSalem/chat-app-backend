@@ -11,7 +11,9 @@ const initApp = (app, express) => {
     app.use(cors())
 
     app.use(express.json({}))
-
+    app.use('/', (req, res)=>{
+        return res.json({message:"welcome to chat app"})
+    })
     app.use('/auth', authRouter)
     app.use('/user', userRouter)
     app.use('/chat', chatRouter)
