@@ -13,6 +13,13 @@ export const signup = asyncHandler(async (req, res, next) => {
     if(await userModel.findOne({email})){
         return next(new Error("Email exists"), {cause: 409})
     }
+    // Merge first and last name to create userName
+    const userName = firstName.toLowerCase() + lastName.toLowerCase();
+
+    // Check if user exists with the same userName
+    if (await userModel.findOne({ userName })) {
+        userName = userName + nanoid(6)
+    }
     //send email
     const token = generateToken({
         payload: {email}, 
@@ -120,7 +127,7 @@ export const signup = asyncHandler(async (req, res, next) => {
     }
     //hash password
     const hashPassword = hash({ plaintext: password })
-    const userName = nanoid(10)
+    // const userName = nanoid(10)
     const user = await userModel.create({ firstName, lastName, email, password: hashPassword, age, phone, gender, userName})
     
     return res.status(201).json({message: "Done", user: user._id})
@@ -261,23 +268,23 @@ export const signin = asyncHandler( async (req, res, next) => {
     
     const user = await userModel.findOne({email})
     if(!user){
-        return next(new Error("Email not exists"))
+        return next(new Error("Email not exists"), {cause: 409})
     }
     if(user.confirmEmail != true){
-        return next(new Error("confirm email first"))
+        return next(new Error("confirm email first"), {cause: 409})
     }
     const match = compare({
         plaintext: password,
         hashValue: user.password
     })
     if (!match) {
-        return next(new Error("In-valid Password"))
+        return next(new Error("email or password invalid"), {cause: 409})
     }
-    if (user.isDeleted) {
-        user.isDeleted = false;
-        await user.save()
-        return res.json({message: "Welcome Back!", token})
-    }
+    // if (user.isDeleted) {
+    //     user.isDeleted = false;
+    //     await user.save()
+    //     return res.status(200).json({message: "Welcome Back!", token})
+    // }
     const token = generateToken({
         payload:{id:user._id, isLoggedIn:true, role:user.role},
         expiresIn: 60 * 60 * 24 * 30
@@ -286,7 +293,7 @@ export const signin = asyncHandler( async (req, res, next) => {
     user.isLoggedIn = true;
     
     await user.save()
-    return res.json({message: "Done", token})
+    return res.status(200).json({message: "Done", token})
 })
 
 // forget password send email code
