@@ -11,11 +11,6 @@ export const users = asyncHandler(async(req, res, next) => {
 })
 
 export const profileId = asyncHandler(async (req, res, next) => {
-    const user = await userModel.find()
-    return res.json({ message: "Done", user})
-})
-
-export const friendProfile = asyncHandler(async (req, res, next) => {
     const {id} = req.params
     const user = await userModel.findById(id)
     return res.json({ message: "Done", user})

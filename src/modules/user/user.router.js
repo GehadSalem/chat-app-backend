@@ -8,7 +8,7 @@ const router = Router();
 
 router.get("/getUsers" ,userController.users)
 router.get("/getUser/:id" ,userController.profileId)
-router.get("/friendProfile/:id", userController.friendProfile)
+
 
 
 
