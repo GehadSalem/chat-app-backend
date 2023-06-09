@@ -2,8 +2,7 @@ import mongoose, { model, Schema } from "mongoose";
 
 const userSchema = new Schema({
 
-    firstName:String,
-    lastName:String,
+    fullName:String,
     userName:{
         type:String,
         unique: true,
