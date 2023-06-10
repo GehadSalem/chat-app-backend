@@ -8,13 +8,13 @@ import { nanoid } from "nanoid";
 
 //sign up
 export const signup = asyncHandler(async (req, res, next) => {
-    const { firstName, lastName, email, password, userName } = req.body;
+    const { firstName, lastName, email, password, username } = req.body;
     //check user
     if(await userModel.findOne({email})){
         return next(new Error("Email exists"), {cause: 409})
     }
-    // Check if user exists with the same userName
-    if (await userModel.findOne({ userName })) {
+    // Check if user exists with the same username
+    if (await userModel.findOne({ username })) {
         return next(new Error("user name exists"), {cause: 409})
     }
     //send email
@@ -126,7 +126,7 @@ export const signup = asyncHandler(async (req, res, next) => {
     const hashPassword = hash({ plaintext: password })
     // Merge first and last name to create fullName
     const fullName = firstName + ' ' + lastName;
-    const user = await userModel.create({ fullName, email, password: hashPassword, userName})
+    const user = await userModel.create({ fullName, email, password: hashPassword, username})
     
     return res.status(201).json({message: "Done", user: user._id})
 

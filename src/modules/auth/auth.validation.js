@@ -6,7 +6,7 @@ export const signup = joi.object({
         email: generalFields.email,
         password: generalFields.password,
         cPassword: generalFields.cPassword.valid(joi.ref('password')),
-        userName: generalFields.userName
+        username: generalFields.userName
     
     }).required()
 

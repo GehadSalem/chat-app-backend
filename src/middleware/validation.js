@@ -6,7 +6,7 @@ const validateObjectId = (value, helper) => {
     return Types.ObjectId.isValid(value) ? true : helper.message('In-valid objectId')
 }
 export const generalFields = {
-    userName: joi.string().alphanum().required(),
+    username: joi.string().alphanum().required(),
     email: joi.string().email({
         minDomainSegments: 2,
         maxDomainSegments: 4,
