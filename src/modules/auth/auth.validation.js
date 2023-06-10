@@ -6,9 +6,8 @@ export const signup = joi.object({
         email: generalFields.email,
         password: generalFields.password,
         cPassword: generalFields.cPassword.valid(joi.ref('password')),
-        age: generalFields.age,
-        gender: generalFields.gender,
-        phone: generalFields.phone
+        phone: generalFields.phone,
+        userName: generalFields.userName
     
     }).required()
 
