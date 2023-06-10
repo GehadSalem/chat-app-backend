@@ -10,13 +10,10 @@ import { nanoid } from "nanoid";
 export const signup = asyncHandler(async (req, res, next) => {
     const { firstName, lastName, email, password, username } = req.body;
     //check user
-    if(await userModel.findOne({email})){
-        return next(new Error("Email exists"), {cause: 409})
+    if(await userModel.findOne({$or: [{email}, {username}]})){
+        return next(new Error("Email or username exists"), {cause: 409})
     }
-    // Check if user exists with the same username
-    if (await userModel.findOne({ username })) {
-        return next(new Error("user name exists"), {cause: 409})
-    }
+    
     //send email
     const token = generateToken({
         payload: {email}, 
